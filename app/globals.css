@@ -1,0 +1,49 @@
+@import "tailwindcss";
+
+:root {
+  --font-bebas: var(--font-bebas);
+  --font-dm-sans: var(--font-dm-sans);
+}
+
+@theme inline {
+  --font-sans: var(--font-dm-sans);
+  --font-bebas: var(--font-bebas);
+  --color-red-primary: #FF2D2D;
+  --color-red-hover: #CC0000;
+  --color-near-black: #111111;
+  --color-light-gray: #F5F5F5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: #ffffff;
+  color: #111111;
+  font-family: var(--font-dm-sans), DM Sans, sans-serif;
+}
+
+.font-bebas {
+  font-family: var(--font-bebas), 'Bebas Neue', sans-serif;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes float2 {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-14px); }
+}
+
+@keyframes pulse-slow {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-float2 { animation: float2 8s ease-in-out infinite; }
+.animate-float3 { animation: float 10s ease-in-out infinite; }
+.animate-pulse-slow { animation: pulse-slow 4s ease-in-out infinite; }
