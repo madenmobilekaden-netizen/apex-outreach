@@ -1,0 +1,816 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Apex Outreach — Your Website. 3 Days. Guaranteed.</title>
+  <meta name="description" content="We build professional websites for small businesses in 3 days flat. $799 flat rate. Money back if we miss the deadline." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --red: #FF2D2D;
+      --red-hover: #CC0000;
+      --black: #111111;
+      --gray-bg: #F5F5F5;
+      --gray-border: #E5E5E5;
+      --gray-muted: #888888;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: #fff;
+      color: var(--black);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .bebas { font-family: 'Bebas Neue', sans-serif; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes float1 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-18px)} }
+    @keyframes float2 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
+    @keyframes float3 { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-22px)} }
+    @keyframes pulse  { 0%,100%{opacity:.25} 50%{opacity:.7} }
+    @keyframes fadeUp { from{opacity:0;transform:translateY(30px)} to{opacity:1;transform:translateY(0)} }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    @keyframes blink  { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+    .fade-up   { opacity:0; transform:translateY(30px); transition: opacity .6s ease, transform .6s ease; }
+    .fade-up.visible { opacity:1; transform:translateY(0); }
+
+    /* ─── NAVBAR ─── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid transparent;
+      transition: border-color .3s, box-shadow .3s;
+      height: 64px;
+      display: flex; align-items: center;
+    }
+    nav.scrolled { border-bottom-color: #eee; box-shadow: 0 2px 16px rgba(0,0,0,.06); }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 24px;
+      width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 24px;
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 22px; letter-spacing: 1px;
+      color: var(--red); text-decoration: none;
+      cursor: pointer;
+    }
+    .nav-logo:hover { color: var(--red-hover); }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a {
+      font-size: 14px; font-weight: 600; color: var(--black);
+      text-decoration: none; position: relative; cursor: pointer;
+      transition: color .2s;
+    }
+    .nav-links a::after {
+      content: ''; position: absolute; bottom: -2px; left: 0;
+      width: 0; height: 2px; background: var(--red);
+      transition: width .3s;
+    }
+    .nav-links a:hover { color: var(--red); }
+    .nav-links a:hover::after { width: 100%; }
+    .nav-cta {
+      background: var(--red); color: #fff;
+      border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 700;
+      padding: 10px 20px; border-radius: 12px;
+      transition: background .2s, transform .15s;
+      white-space: nowrap;
+    }
+    .nav-cta:hover { background: var(--red-hover); transform: scale(1.04); }
+    .nav-cta:active { transform: scale(.97); }
+
+    /* ─── HERO ─── */
+    #hero {
+      min-height: 100vh; display: flex; align-items: center;
+      position: relative; overflow: hidden; background: #fff;
+    }
+    .hero-geo {
+      position: absolute; top: 0; right: 0;
+      width: 45vw; height: 55vh;
+      pointer-events: none;
+    }
+    .hero-dot {
+      position: absolute; border-radius: 50%; pointer-events: none;
+    }
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 1100px; margin: 0 auto; padding: 120px 24px 80px;
+      animation: fadeUp .8s ease forwards;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gray-bg); border: 1px solid var(--gray-border);
+      font-size: 13px; font-weight: 600; padding: 8px 16px;
+      border-radius: 99px; margin-bottom: 24px;
+    }
+    .hero-badge-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--red); animation: blink 1.6s infinite;
+    }
+    .hero-h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(58px, 9vw, 100px);
+      line-height: 1; color: var(--black);
+      max-width: 820px; margin-bottom: 24px;
+    }
+    .hero-sub {
+      font-size: 18px; color: #666; max-width: 520px;
+      line-height: 1.65; margin-bottom: 40px;
+    }
+    .hero-sub strong { color: var(--black); }
+    .hero-btns { display: flex; flex-wrap: wrap; gap: 16px; }
+    .btn-primary {
+      background: var(--red); color: #fff;
+      border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px; font-weight: 700;
+      padding: 16px 32px; border-radius: 16px;
+      box-shadow: 0 8px 24px rgba(255,45,45,.28);
+      transition: background .2s, transform .15s, box-shadow .2s;
+    }
+    .btn-primary:hover { background: var(--red-hover); transform: scale(1.04); box-shadow: 0 12px 32px rgba(255,45,45,.35); }
+    .btn-primary:active { transform: scale(.97); }
+    .btn-outline {
+      background: transparent; color: var(--black);
+      border: 2px solid var(--black); cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px; font-weight: 700;
+      padding: 14px 32px; border-radius: 16px;
+      transition: border-color .2s, color .2s, transform .15s;
+    }
+    .btn-outline:hover { border-color: var(--red); color: var(--red); transform: scale(1.04); }
+    .btn-outline:active { transform: scale(.97); }
+
+    /* ─── SOCIAL PROOF ─── */
+    #social-proof {
+      border-top: 3px solid var(--red);
+      background: #fff; padding: 24px 24px;
+    }
+    .social-inner {
+      max-width: 900px; margin: 0 auto;
+      display: flex; flex-wrap: wrap; justify-content: space-around; gap: 20px;
+    }
+    .stat { text-align: center; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 40px; color: var(--red); line-height: 1;
+    }
+    .stat-label { font-size: 13px; font-weight: 600; color: var(--gray-muted); margin-top: 4px; }
+
+    /* ─── SECTION SHARED ─── */
+    .section-tag {
+      display: inline-block;
+      background: rgba(255,45,45,.1); color: var(--red);
+      font-size: 13px; font-weight: 700;
+      padding: 6px 16px; border-radius: 99px; margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 6vw, 64px);
+      line-height: 1; color: var(--black);
+    }
+    .section-sub { color: #666; margin-top: 12px; max-width: 440px; }
+
+    /* ─── HOW IT WORKS ─── */
+    #how-it-works { background: var(--gray-bg); padding: 96px 24px; }
+    .hiw-inner { max-width: 1100px; margin: 0 auto; }
+    .hiw-header { text-align: center; margin-bottom: 60px; }
+    .steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; }
+    .step-card {
+      background: #fff; border-radius: 20px; padding: 32px;
+      box-shadow: 0 2px 16px rgba(0,0,0,.05);
+      position: relative; overflow: hidden;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .step-card:hover { box-shadow: 0 8px 32px rgba(0,0,0,.1); transform: translateY(-4px); }
+    .step-bg-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 90px; color: rgba(255,45,45,.08);
+      position: absolute; top: -8px; right: -4px;
+      line-height: 1; transition: color .3s; user-select: none;
+    }
+    .step-card:hover .step-bg-num { color: rgba(255,45,45,.16); }
+    .step-icon { font-size: 32px; margin-bottom: 16px; }
+    .step-label { font-family: 'Bebas Neue', sans-serif; font-size: 20px; color: var(--red); margin-bottom: 4px; }
+    .step-title { font-size: 17px; font-weight: 700; color: var(--black); margin-bottom: 8px; }
+    .step-desc { font-size: 14px; color: #666; line-height: 1.6; }
+
+    /* ─── PORTFOLIO ─── */
+    #work { background: #fff; padding: 96px 24px; }
+    .portfolio-inner { max-width: 1100px; margin: 0 auto; }
+    .portfolio-header { text-align: center; margin-bottom: 60px; }
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(440px, 1fr));
+      gap: 32px;
+    }
+    .portfolio-card {
+      transition: transform .3s;
+      cursor: default;
+    }
+    .portfolio-card:hover { transform: translateY(-8px); }
+    .browser-chrome {
+      background: #F0F0F0;
+      border-radius: 12px 12px 0 0;
+      border: 1px solid #DDD;
+      border-bottom: none;
+      padding: 10px 12px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .browser-dots { display: flex; gap: 5px; }
+    .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .dot-red    { background: #FF5F57; }
+    .dot-yellow { background: #FFBD2E; }
+    .dot-green  { background: #28CA41; }
+    .browser-bar {
+      flex: 1; background: #fff; border: 1px solid #DDD;
+      border-radius: 6px; padding: 4px 10px;
+      font-size: 11px; color: #999; overflow: hidden; white-space: nowrap; text-overflow: ellipsis;
+    }
+    .browser-body {
+      height: 220px; overflow: hidden;
+      border: 1px solid #DDD; border-top: none;
+      border-radius: 0 0 12px 12px;
+    }
+    .browser-body iframe {
+      width: 100%; height: 100%; border: none; display: block;
+    }
+    .card-meta {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-top: 12px; padding: 0 4px;
+    }
+    .card-name { font-size: 15px; font-weight: 700; color: var(--black); }
+    .card-tag {
+      font-size: 12px; font-weight: 700; color: var(--red);
+      background: var(--gray-bg); padding: 4px 12px; border-radius: 99px;
+    }
+
+    /* ─── PRICING ─── */
+    #pricing { background: var(--gray-bg); padding: 96px 24px; }
+    .pricing-inner { max-width: 520px; margin: 0 auto; }
+    .pricing-header { text-align: center; margin-bottom: 48px; }
+    .pricing-card {
+      background: #fff; border-radius: 28px;
+      border: 2px solid var(--red);
+      box-shadow: 0 8px 40px rgba(255,45,45,.18);
+      padding: 48px 40px;
+    }
+    .price-display { text-align: center; margin-bottom: 32px; }
+    .price-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 96px; color: var(--red); line-height: 1;
+    }
+    .price-label {
+      font-size: 12px; font-weight: 700;
+      color: #aaa; letter-spacing: 3px;
+      text-transform: uppercase; margin-top: 4px;
+    }
+    .feature-list { list-style: none; margin-bottom: 32px; display: flex; flex-direction: column; gap: 12px; }
+    .feature-item { display: flex; align-items: flex-start; gap: 12px; }
+    .check-circle {
+      width: 20px; height: 20px; border-radius: 50%;
+      background: var(--red); flex-shrink: 0; margin-top: 2px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .check-circle svg { width: 11px; height: 11px; }
+    .feature-text { font-size: 15px; font-weight: 500; color: var(--black); }
+    .btn-full {
+      width: 100%; background: var(--red); color: #fff;
+      border: none; cursor: pointer;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px; font-weight: 700;
+      padding: 18px; border-radius: 18px;
+      box-shadow: 0 8px 24px rgba(255,45,45,.28);
+      transition: background .2s, transform .15s;
+    }
+    .btn-full:hover { background: var(--red-hover); transform: scale(1.02); }
+    .btn-full:active { transform: scale(.98); }
+
+    /* ─── TESTIMONIALS ─── */
+    #testimonials { background: #fff; padding: 96px 24px; }
+    .testimonials-inner { max-width: 1100px; margin: 0 auto; }
+    .testimonials-header { text-align: center; margin-bottom: 60px; }
+    .testimonials-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px; }
+    .testi-card {
+      background: #fff; border: 1px solid #E5E5E5;
+      border-radius: 20px; padding: 28px;
+      transition: box-shadow .3s, transform .3s;
+    }
+    .testi-card:hover { box-shadow: 0 6px 32px rgba(255,45,45,.14); transform: translateY(-4px); }
+    .stars { display: flex; gap: 3px; margin-bottom: 16px; }
+    .star { color: #F59E0B; font-size: 16px; }
+    .testi-quote { font-size: 14px; line-height: 1.7; color: var(--black); font-style: italic; margin-bottom: 20px; }
+    .testi-author { display: flex; align-items: center; gap: 12px; }
+    .avatar {
+      width: 40px; height: 40px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 700; color: #fff; flex-shrink: 0;
+    }
+    .testi-name { font-size: 14px; font-weight: 700; color: var(--black); }
+    .testi-biz  { font-size: 12px; color: #999; }
+
+    /* ─── CONTACT FORM ─── */
+    #contact { background: var(--gray-bg); padding: 96px 24px; }
+    .contact-inner { max-width: 560px; margin: 0 auto; }
+    .contact-header { text-align: center; margin-bottom: 48px; }
+    .contact-header .section-sub { margin: 0 auto; }
+    .form-card {
+      background: #fff; border-radius: 28px;
+      border-top: 4px solid var(--red);
+      box-shadow: 0 4px 24px rgba(0,0,0,.07);
+      padding: 40px;
+    }
+    .form-group { margin-bottom: 20px; }
+    .form-label { display: block; font-size: 13px; font-weight: 700; color: var(--black); margin-bottom: 6px; }
+    .form-input, .form-select {
+      width: 100%; border: 1.5px solid #E5E5E5;
+      border-radius: 12px; padding: 13px 16px;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px; color: var(--black);
+      background: #fff; outline: none;
+      transition: border-color .2s, box-shadow .2s;
+    }
+    .form-input::placeholder { color: #CCC; }
+    .form-input:focus, .form-select:focus { border-color: var(--red); box-shadow: 0 0 0 3px rgba(255,45,45,.1); }
+    .form-hint { text-align: center; font-size: 12px; color: #AAA; margin-top: 12px; }
+    .success-box {
+      text-align: center; padding: 40px 20px; display: none;
+    }
+    .success-box.show { display: block; animation: fadeIn .5s ease; }
+    .success-icon {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: #D1FAE5; display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .success-icon svg { width: 32px; height: 32px; color: #10B981; }
+    .success-title { font-family: 'Bebas Neue', sans-serif; font-size: 32px; color: var(--black); margin-bottom: 8px; }
+    .success-msg { font-size: 16px; color: #666; }
+
+    /* ─── FOOTER ─── */
+    footer { background: var(--black); color: #fff; padding: 48px 24px; }
+    .footer-inner {
+      max-width: 1100px; margin: 0 auto;
+    }
+    .footer-top {
+      display: flex; flex-wrap: wrap; align-items: center;
+      justify-content: space-between; gap: 24px;
+      margin-bottom: 32px;
+    }
+    .footer-logo { font-family: 'Bebas Neue', sans-serif; font-size: 22px; color: var(--red); }
+    .footer-tagline { font-size: 13px; color: #666; margin-top: 4px; }
+    .footer-nav { display: flex; flex-wrap: wrap; gap: 24px; list-style: none; }
+    .footer-nav a {
+      font-size: 14px; color: #888; cursor: pointer;
+      text-decoration: none; transition: color .2s;
+    }
+    .footer-nav a:hover { color: #fff; }
+    .footer-bottom {
+      border-top: 1px solid #222; padding-top: 24px;
+      display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px;
+    }
+    .footer-copy { font-size: 12px; color: #555; }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 700px) {
+      .nav-links { display: none; }
+      .portfolio-grid { grid-template-columns: 1fr; }
+      .pricing-card { padding: 32px 24px; }
+      .form-card { padding: 28px 20px; }
+    }
+    @media (max-width: 480px) {
+      .hero-h1 { font-size: 52px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ─── NAVBAR ─── -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <span class="nav-logo" onclick="scrollTo('hero')">APEX OUTREACH</span>
+    <ul class="nav-links">
+      <li><a onclick="scrollTo('work')">Work</a></li>
+      <li><a onclick="scrollTo('how-it-works')">How It Works</a></li>
+      <li><a onclick="scrollTo('pricing')">Pricing</a></li>
+      <li><a onclick="scrollTo('contact')">Contact</a></li>
+    </ul>
+    <button class="nav-cta" onclick="scrollTo('contact')">Get My Website</button>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section id="hero">
+  <!-- Geometric shape -->
+  <svg class="hero-geo" viewBox="0 0 400 350" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M400 0 L400 350 L80 0 Z" fill="#FF2D2D" opacity="0.08"/>
+    <path d="M400 0 L400 280 L140 0 Z" fill="#FF2D2D" opacity="0.06"/>
+    <path d="M400 0 L400 180 L240 0 Z" fill="#FF2D2D" opacity="0.13"/>
+  </svg>
+
+  <!-- Floating dots -->
+  <div class="hero-dot" style="left:10%;top:22%;width:8px;height:8px;background:#FF2D2D;animation:float1 6s ease-in-out infinite,pulse 4s ease-in-out infinite"></div>
+  <div class="hero-dot" style="left:83%;top:16%;width:12px;height:12px;background:#DDDDDD;animation:float2 8s ease-in-out infinite;animation-delay:1s"></div>
+  <div class="hero-dot" style="left:74%;top:68%;width:6px;height:6px;background:#FF2D2D;animation:float3 10s ease-in-out infinite;animation-delay:2s"></div>
+  <div class="hero-dot" style="left:20%;top:74%;width:10px;height:10px;background:#DDDDDD;animation:float2 8s ease-in-out infinite;animation-delay:.5s"></div>
+  <div class="hero-dot" style="left:50%;top:11%;width:7px;height:7px;background:#FF2D2D;animation:float1 6s ease-in-out infinite;animation-delay:1.5s"></div>
+  <div class="hero-dot" style="left:89%;top:50%;width:9px;height:9px;background:#DDDDDD;animation:float3 10s ease-in-out infinite;animation-delay:2.5s"></div>
+  <div class="hero-dot" style="left:5%;top:54%;width:5px;height:5px;background:#DDDDDD;animation:float2 8s ease-in-out infinite;animation-delay:3s"></div>
+  <div class="hero-dot" style="left:40%;top:84%;width:11px;height:11px;background:#FF2D2D;animation:float1 6s ease-in-out infinite;animation-delay:.8s;opacity:.5"></div>
+
+  <div class="hero-inner">
+    <div class="hero-badge">
+      <span class="hero-badge-dot"></span>
+      Accepting new clients — 3 spots left this week
+    </div>
+    <h1 class="hero-h1">Your Business Deserves A Website That Actually Works.</h1>
+    <p class="hero-sub">
+      We build professional websites for small businesses in 3 days flat.
+      <strong>$799.</strong> Money back if we miss the deadline.
+    </p>
+    <div class="hero-btns">
+      <button class="btn-primary" onclick="scrollTo('contact')">Get My Website — $799</button>
+      <button class="btn-outline" onclick="scrollTo('work')">See Our Work</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── SOCIAL PROOF ─── -->
+<div id="social-proof">
+  <div class="social-inner">
+    <div class="stat fade-up">
+      <div class="stat-num">50+</div>
+      <div class="stat-label">Sites Launched</div>
+    </div>
+    <div class="stat fade-up" style="transition-delay:.1s">
+      <div class="stat-num">3-Day</div>
+      <div class="stat-label">Average Turnaround</div>
+    </div>
+    <div class="stat fade-up" style="transition-delay:.2s">
+      <div class="stat-num">100%</div>
+      <div class="stat-label">Money-Back Guarantee</div>
+    </div>
+  </div>
+</div>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section id="how-it-works">
+  <div class="hiw-inner">
+    <div class="hiw-header fade-up">
+      <span class="section-tag">Simple Process</span>
+      <h2 class="section-title">From Zero to Live in 3 Days</h2>
+    </div>
+    <div class="steps">
+      <div class="step-card fade-up">
+        <div class="step-bg-num">1</div>
+        <div class="step-icon">📋</div>
+        <div class="step-label">Step 1</div>
+        <div class="step-title">You Fill Out the Form</div>
+        <div class="step-desc">Tell us about your business. Takes 2 minutes.</div>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:.12s">
+        <div class="step-bg-num">2</div>
+        <div class="step-icon">⚡</div>
+        <div class="step-label">Step 2</div>
+        <div class="step-title">We Build Your Site</div>
+        <div class="step-desc">Custom design, built fast. You approve before it goes live.</div>
+      </div>
+      <div class="step-card fade-up" style="transition-delay:.24s">
+        <div class="step-bg-num">3</div>
+        <div class="step-icon">🚀</div>
+        <div class="step-label">Step 3</div>
+        <div class="step-title">You Go Live</div>
+        <div class="step-desc">Your site is live within 3 days. Guaranteed or your money back.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── PORTFOLIO ─── -->
+<section id="work">
+  <div class="portfolio-inner">
+    <div class="portfolio-header fade-up">
+      <span class="section-tag">Portfolio</span>
+      <h2 class="section-title">Recent Projects</h2>
+      <p class="section-sub" style="margin:0 auto">Real websites built for real businesses. Each one live in 3 days.</p>
+    </div>
+    <div class="portfolio-grid">
+
+      <!-- 1. Peak Roofing Co. -->
+      <div class="portfolio-card fade-up">
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="browser-dot dot-red"></div>
+            <div class="browser-dot dot-yellow"></div>
+            <div class="browser-dot dot-green"></div>
+          </div>
+          <div class="browser-bar">www.peakroofingco.com</div>
+        </div>
+        <div class="browser-body">
+          <iframe sandbox="allow-same-origin" title="Peak Roofing Co." srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#0D1B2A;color:#fff;height:220px;overflow:hidden'><div style='background:#E07B28;padding:7px 14px;display:flex;align-items:center;justify-content:space-between'><span style='font-weight:900;font-size:12px;letter-spacing:1px'>PEAK ROOFING CO.</span><span style='font-size:10px;font-weight:bold'>📞 (314) 555-0192</span></div><div style='padding:18px 14px;text-align:center;background:linear-gradient(135deg,#0D1B2A 60%,#1a2d42)'><div style='font-size:9px;color:#E07B28;letter-spacing:2px;font-weight:bold;margin-bottom:6px'>LICENSED &amp; INSURED — MISSOURI</div><div style='font-size:17px;font-weight:900;line-height:1.2;margin-bottom:7px'>Roofing You Can<br/>Trust Since 2008</div><div style='font-size:9px;color:#aaa;margin-bottom:12px'>Free estimates • Storm damage specialists</div><button style='background:#E07B28;color:#fff;border:none;padding:7px 18px;border-radius:5px;font-weight:bold;font-size:10px;cursor:pointer'>GET FREE ESTIMATE</button></div><div style='padding:10px 14px;background:#111e2d'><div style='font-size:10px;color:#E07B28;font-weight:bold;margin-bottom:7px;text-align:center'>OUR SERVICES</div><div style='display:grid;grid-template-columns:1fr 1fr;gap:5px'><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Roof Replacement</div><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Storm Damage</div><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Gutters &amp; Flashing</div><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Commercial Roofing</div></div></div><div style='background:#E07B28;padding:8px 14px;text-align:center;margin-top:4px'><div style='font-size:11px;font-weight:900'>📞 CALL NOW: (314) 555-0192</div></div></body></html>"></iframe>
+        </div>
+        <div class="card-meta">
+          <span class="card-name">Peak Roofing Co.</span>
+          <span class="card-tag">Contractor</span>
+        </div>
+      </div>
+
+      <!-- 2. Lakeview Eats -->
+      <div class="portfolio-card fade-up" style="transition-delay:.1s">
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="browser-dot dot-red"></div>
+            <div class="browser-dot dot-yellow"></div>
+            <div class="browser-dot dot-green"></div>
+          </div>
+          <div class="browser-bar">www.lakevieweats.com</div>
+        </div>
+        <div class="browser-body">
+          <iframe sandbox="allow-same-origin" title="Lakeview Eats" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Georgia,serif;background:#F5ECD7;color:#2C1810;height:220px;overflow:hidden'><div style='background:#8B1A1A;padding:7px 14px;display:flex;align-items:center;justify-content:space-between'><span style='color:#F5ECD7;font-weight:bold;font-size:12px;letter-spacing:1px'>LAKEVIEW EATS</span><span style='color:#F5ECD7;font-size:9px'>Mon–Sun 11am–10pm</span></div><div style='background:linear-gradient(160deg,#8B1A1A,#C0392B);padding:20px 14px;text-align:center;position:relative;overflow:hidden'><div style='position:absolute;inset:0;opacity:0.1;background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(255,210,120,0.6) 5px,rgba(255,210,120,0.6) 6px)'></div><div style='position:relative'><div style='font-size:9px;color:#F5C86A;letter-spacing:2px;font-weight:bold;margin-bottom:6px'>FRESH • LOCAL • DELICIOUS</div><div style='font-size:18px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px'>Farm to Table<br/>at the Lake</div><div style='font-size:9px;color:#eee;margin-bottom:10px'>Serving the community since 2012</div><button style='background:#F5C86A;color:#2C1810;border:none;padding:6px 14px;border-radius:4px;font-weight:bold;font-size:9px'>VIEW MENU</button></div></div><div style='padding:10px 14px'><div style='font-size:10px;color:#8B1A1A;font-weight:bold;text-align:center;margin-bottom:6px'>TODAY&#39;S SPECIALS</div><div style='display:flex;flex-direction:column;gap:4px'><div style='display:flex;justify-content:space-between;padding:5px 8px;background:#fff;border-radius:4px;font-size:9px'><span>Pan-Seared Salmon</span><span style='color:#8B1A1A;font-weight:bold'>$24</span></div><div style='display:flex;justify-content:space-between;padding:5px 8px;background:#fff;border-radius:4px;font-size:9px'><span>Ribeye Steak</span><span style='color:#8B1A1A;font-weight:bold'>$38</span></div><div style='display:flex;justify-content:space-between;padding:5px 8px;background:#fff;border-radius:4px;font-size:9px'><span>Pasta Primavera</span><span style='color:#8B1A1A;font-weight:bold'>$18</span></div></div></div></body></html>"></iframe>
+        </div>
+        <div class="card-meta">
+          <span class="card-name">Lakeview Eats</span>
+          <span class="card-tag">Restaurant</span>
+        </div>
+      </div>
+
+      <!-- 3. Clarity Med Spa -->
+      <div class="portfolio-card fade-up" style="transition-delay:.2s">
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="browser-dot dot-red"></div>
+            <div class="browser-dot dot-yellow"></div>
+            <div class="browser-dot dot-green"></div>
+          </div>
+          <div class="browser-bar">www.claritymedspa.com</div>
+        </div>
+        <div class="browser-body">
+          <iframe sandbox="allow-same-origin" title="Clarity Med Spa" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#FAFAF8;color:#333;height:220px;overflow:hidden'><div style='background:#fff;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E8EDE8'><span style='color:#5A7A5A;font-size:11px;font-weight:900;letter-spacing:3px'>CLARITY</span><span style='font-size:9px;color:#999'>MED SPA &amp; WELLNESS</span></div><div style='background:linear-gradient(160deg,#E8F0E8,#F5F9F5);padding:20px 14px;text-align:center'><div style='font-size:8px;color:#5A7A5A;letter-spacing:3px;font-weight:bold;margin-bottom:7px'>LUXURY WELLNESS</div><div style='font-size:17px;font-weight:900;color:#2A3A2A;line-height:1.3;margin-bottom:6px'>Feel Like<br/>Yourself Again</div><div style='font-size:9px;color:#888;margin-bottom:12px'>Medical-grade skincare treatments</div><button style='background:#5A7A5A;color:#fff;border:none;padding:7px 18px;border-radius:20px;font-weight:bold;font-size:9px'>Book Consultation</button></div><div style='padding:10px 14px'><div style='font-size:9px;color:#5A7A5A;font-weight:bold;margin-bottom:6px;text-align:center'>OUR SERVICES</div><div style='display:grid;grid-template-columns:1fr 1fr;gap:5px'><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center;color:#2A3A2A'>Botox &amp; Fillers</div><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center;color:#2A3A2A'>Laser Skin</div><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center;color:#2A3A2A'>Chemical Peels</div><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center;color:#2A3A2A'>Microneedling</div></div></div><div style='margin:8px 14px;background:#5A7A5A;padding:8px;border-radius:8px;text-align:center'><div style='font-size:9px;color:#fff;font-weight:bold'>New Client Special: 20% Off First Visit</div></div></body></html>"></iframe>
+        </div>
+        <div class="card-meta">
+          <span class="card-name">Clarity Med Spa</span>
+          <span class="card-tag">Med Spa / Beauty</span>
+        </div>
+      </div>
+
+      <!-- 4. Titan Fitness STL -->
+      <div class="portfolio-card fade-up" style="transition-delay:.3s">
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="browser-dot dot-red"></div>
+            <div class="browser-dot dot-yellow"></div>
+            <div class="browser-dot dot-green"></div>
+          </div>
+          <div class="browser-bar">www.titanfitnessstl.com</div>
+        </div>
+        <div class="browser-body">
+          <iframe sandbox="allow-same-origin" title="Titan Fitness STL" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#0A0A0A;color:#fff;height:220px;overflow:hidden'><div style='background:#F5E000;padding:7px 14px;display:flex;align-items:center;justify-content:space-between'><span style='color:#0A0A0A;font-weight:900;font-size:12px;letter-spacing:2px'>TITAN FITNESS STL</span><span style='font-size:9px;color:#0A0A0A;font-weight:bold'>24/7 ACCESS</span></div><div style='padding:18px 14px;text-align:center;background:linear-gradient(160deg,#1A1A1A,#0A0A0A)'><div style='font-size:8px;color:#F5E000;letter-spacing:3px;font-weight:bold;margin-bottom:6px'>BUILD YOUR BEST SELF</div><div style='font-size:20px;font-weight:900;line-height:1.1;margin-bottom:4px'>NO EXCUSES.</div><div style='font-size:20px;font-weight:900;line-height:1.1;color:#F5E000;margin-bottom:10px'>JUST RESULTS.</div><button style='background:#F5E000;color:#0A0A0A;border:none;padding:7px 18px;border-radius:4px;font-weight:900;font-size:10px'>START FREE TRIAL</button></div><div style='padding:8px 14px;background:#111'><div style='font-size:9px;color:#F5E000;font-weight:bold;margin-bottom:6px;text-align:center'>CLASS SCHEDULE</div><div style='display:flex;flex-direction:column;gap:4px'><div style='display:flex;justify-content:space-between;padding:4px 8px;background:#1A1A1A;border-left:2px solid #F5E000;font-size:8.5px'><span style='color:#F5E000'>6:00 AM</span><span>CrossFit Power</span></div><div style='display:flex;justify-content:space-between;padding:4px 8px;background:#1A1A1A;border-left:2px solid #F5E000;font-size:8.5px'><span style='color:#F5E000'>12:00 PM</span><span>HIIT Bootcamp</span></div><div style='display:flex;justify-content:space-between;padding:4px 8px;background:#1A1A1A;border-left:2px solid #F5E000;font-size:8.5px'><span style='color:#F5E000'>5:30 PM</span><span>Strength &amp; Conditioning</span></div></div></div></body></html>"></iframe>
+        </div>
+        <div class="card-meta">
+          <span class="card-name">Titan Fitness STL</span>
+          <span class="card-tag">Gym</span>
+        </div>
+      </div>
+
+      <!-- 5. Summit Real Estate Group -->
+      <div class="portfolio-card fade-up" style="transition-delay:.4s">
+        <div class="browser-chrome">
+          <div class="browser-dots">
+            <div class="browser-dot dot-red"></div>
+            <div class="browser-dot dot-yellow"></div>
+            <div class="browser-dot dot-green"></div>
+          </div>
+          <div class="browser-bar">www.summitrealestategroup.com</div>
+        </div>
+        <div class="browser-body">
+          <iframe sandbox="allow-same-origin" title="Summit Real Estate Group" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#1C1C1E;color:#fff;height:220px;overflow:hidden'><div style='background:#2C2C2E;padding:7px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #C9A84C'><span style='color:#C9A84C;font-weight:900;font-size:11px;letter-spacing:2px'>SUMMIT REAL ESTATE</span><span style='font-size:9px;color:#aaa'>GROUP</span></div><div style='padding:16px 14px;background:linear-gradient(160deg,#2C2C2E,#1C1C1E)'><div style='font-size:8px;color:#C9A84C;letter-spacing:2px;font-weight:bold;margin-bottom:6px'>LUXURY PROPERTIES</div><div style='font-size:15px;font-weight:900;line-height:1.3;margin-bottom:5px'>Find Your<br/>Dream Home</div><div style='font-size:8.5px;color:#aaa;margin-bottom:10px'>Top-rated agents in the St. Louis metro area</div><button style='background:#C9A84C;color:#1C1C1E;border:none;padding:6px 14px;border-radius:4px;font-weight:bold;font-size:9px'>View Listings</button></div><div style='padding:8px 14px'><div style='font-size:8.5px;color:#C9A84C;font-weight:bold;margin-bottom:6px'>FEATURED LISTINGS</div><div style='display:flex;flex-direction:column;gap:5px'><div style='background:#2C2C2E;padding:6px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center'><div style='font-size:8.5px'>4bd / 3ba • Clayton</div><div style='color:#C9A84C;font-weight:bold;font-size:9px'>$725,000</div></div><div style='background:#2C2C2E;padding:6px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center'><div style='font-size:8.5px'>3bd / 2ba • Webster Groves</div><div style='color:#C9A84C;font-weight:bold;font-size:9px'>$489,000</div></div></div></div><div style='margin:6px 14px;background:#2C2C2E;padding:8px;border-radius:5px;display:flex;align-items:center;gap:10px'><div style='width:30px;height:30px;border-radius:50%;background:#C9A84C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:bold;color:#1C1C1E;flex-shrink:0'>JR</div><div><div style='font-size:9px;font-weight:bold'>James Rivera</div><div style='font-size:8px;color:#aaa'>Lead Agent • 12 yrs exp</div></div></div></body></html>"></iframe>
+        </div>
+        <div class="card-meta">
+          <span class="card-name">Summit Real Estate Group</span>
+          <span class="card-tag">Real Estate</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── PRICING ─── -->
+<section id="pricing">
+  <div class="pricing-inner">
+    <div class="pricing-header fade-up">
+      <span class="section-tag">Simple Pricing</span>
+      <h2 class="section-title">No Hidden Fees. Ever.</h2>
+    </div>
+    <div class="pricing-card fade-up" style="transition-delay:.1s">
+      <div class="price-display">
+        <div class="price-num">$799</div>
+        <div class="price-label">One-Time Flat Rate</div>
+      </div>
+      <ul class="feature-list">
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">Custom design built for your business</span>
+        </li>
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">Mobile-ready on all devices</span>
+        </li>
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">SEO basics included</span>
+        </li>
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">Contact form + click-to-call</span>
+        </li>
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">Live in 3 days guaranteed</span>
+        </li>
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">100% money back if we miss the deadline</span>
+        </li>
+        <li class="feature-item">
+          <div class="check-circle"><svg fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="3"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg></div>
+          <span class="feature-text">1 round of revisions included</span>
+        </li>
+      </ul>
+      <button class="btn-full" onclick="scrollTo('contact')">Claim Your Spot</button>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <div class="testimonials-header fade-up">
+      <span class="section-tag">Testimonials</span>
+      <h2 class="section-title">What Our Clients Say</h2>
+    </div>
+    <div class="testimonials-grid">
+
+      <div class="testi-card fade-up">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"Site was live in 2 days. Already getting calls from it. Best $799 I've spent on my business."</p>
+        <div class="testi-author">
+          <div class="avatar" style="background:#FF2D2D">MT</div>
+          <div>
+            <div class="testi-name">Mike T.</div>
+            <div class="testi-biz">MT Contracting</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card fade-up" style="transition-delay:.12s">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"I didn't think a real website was possible at this price. Completely blown away by how professional it looks."</p>
+        <div class="testi-author">
+          <div class="avatar" style="background:#8B5CF6">SK</div>
+          <div>
+            <div class="testi-name">Sarah K.</div>
+            <div class="testi-biz">SK Boutique</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card fade-up" style="transition-delay:.24s">
+        <div class="stars">★★★★★</div>
+        <p class="testi-quote">"They built my entire site while I was on a job site. Checked my phone and it was live. Unreal."</p>
+        <div class="testi-author">
+          <div class="avatar" style="background:#059669">DM</div>
+          <div>
+            <div class="testi-name">Derek M.</div>
+            <div class="testi-biz">Lakeview Landscaping</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── CONTACT FORM ─── -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-header fade-up">
+      <span class="section-tag">Get Started</span>
+      <h2 class="section-title">Let's Build Your Website</h2>
+      <p class="section-sub" style="text-align:center;margin:12px auto 0">Fill out the form below and we'll call you within the hour.</p>
+    </div>
+    <div class="form-card fade-up" style="transition-delay:.1s">
+
+      <div id="form-wrap">
+        <form id="lead-form" onsubmit="submitForm(event)">
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input class="form-input" type="text" placeholder="John Smith" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Phone Number</label>
+            <input class="form-input" type="tel" placeholder="(314) 555-0100" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input class="form-input" type="email" placeholder="john@example.com" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Business Type</label>
+            <input class="form-input" type="text" placeholder="What kind of business do you run?" required />
+          </div>
+          <div class="form-group">
+            <label class="form-label">Best Time to Call</label>
+            <select class="form-select" required>
+              <option value="" disabled selected>Select a time...</option>
+              <option>Morning 8am–12pm</option>
+              <option>Afternoon 12pm–5pm</option>
+              <option>Evening 5pm–8pm</option>
+            </select>
+          </div>
+          <button type="submit" class="btn-full">Get My Website — $799</button>
+          <p class="form-hint">Money-back guarantee if we miss your 3-day deadline.</p>
+        </form>
+      </div>
+
+      <div class="success-box" id="success-box">
+        <div class="success-icon">
+          <svg fill="none" viewBox="0 0 24 24" stroke="#10B981" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+        <div class="success-title">We Got It!</div>
+        <p class="success-msg">Expect a call from us within the hour.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-logo">APEX OUTREACH</div>
+        <div class="footer-tagline">Your Website. 3 Days. Guaranteed.</div>
+      </div>
+      <ul class="footer-nav">
+        <li><a onclick="scrollTo('work')">Work</a></li>
+        <li><a onclick="scrollTo('how-it-works')">How It Works</a></li>
+        <li><a onclick="scrollTo('pricing')">Pricing</a></li>
+        <li><a onclick="scrollTo('contact')">Contact</a></li>
+      </ul>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-copy">© 2025 Apex Outreach. All rights reserved.</span>
+      <span class="footer-copy">Professional websites for small businesses.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Smooth scroll helper
+  function scrollTo(id) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  // Sticky nav shadow
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 20);
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Form submit
+  function submitForm(e) {
+    e.preventDefault();
+    document.getElementById('form-wrap').style.display = 'none';
+    document.getElementById('success-box').classList.add('show');
+  }
+</script>
+</body>
+</html>
