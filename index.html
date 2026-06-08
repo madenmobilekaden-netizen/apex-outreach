@@ -348,25 +348,53 @@
 
     /* ── PORTFOLIO ── */
     #work { background: var(--dark); }
-    .portfolio-grid {
+
+    .portfolio-bento {
       display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 24px; margin-top: 64px;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 20px;
+      margin-top: 64px;
     }
+    /* first card spans full width — featured */
+    .p-card-featured { grid-column: 1 / -1; }
+
     .p-card {
-      border-radius: 18px; overflow: hidden;
+      border-radius: 20px; overflow: hidden;
       border: 1px solid var(--border);
       background: var(--dark3);
-      transition: border-color .3s, transform .3s, box-shadow .3s;
+      position: relative;
+      transition: border-color .35s, transform .35s, box-shadow .35s;
       cursor: default;
     }
     .p-card:hover {
-      border-color: rgba(255,45,45,.35);
+      border-color: rgba(255,45,45,.4);
       transform: translateY(-6px);
-      box-shadow: 0 20px 60px rgba(0,0,0,.5), 0 0 40px rgba(255,45,45,.08);
+      box-shadow: 0 24px 64px rgba(0,0,0,.6), 0 0 48px rgba(255,45,45,.1);
     }
+    /* hover overlay */
+    .p-card .p-hover-overlay {
+      position: absolute; inset: 0; z-index: 10;
+      background: rgba(10,10,12,.7);
+      backdrop-filter: blur(4px);
+      display: flex; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity .3s;
+    }
+    .p-card:hover .p-hover-overlay { opacity: 1; }
+    .p-overlay-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--red); color: #fff;
+      font-size: 13px; font-weight: 700;
+      padding: 10px 22px; border-radius: 99px;
+      letter-spacing: .3px;
+      box-shadow: 0 0 30px rgba(255,45,45,.5);
+      transform: translateY(6px);
+      transition: transform .3s;
+    }
+    .p-card:hover .p-overlay-badge { transform: translateY(0); }
+
     .browser-bar-wrap {
-      background: rgba(255,255,255,.04);
+      background: rgba(255,255,255,.03);
       border-bottom: 1px solid var(--border);
       padding: 10px 14px;
       display: flex; align-items: center; gap: 10px;
@@ -375,24 +403,32 @@
     .b-dot { width: 9px; height: 9px; border-radius: 50%; }
     .bd-r { background: #FF5F57; } .bd-y { background: #FFBD2E; } .bd-g { background: #28CA41; }
     .b-url {
-      flex: 1; background: rgba(255,255,255,.06);
+      flex: 1; background: rgba(255,255,255,.05);
       border: 1px solid var(--border);
       border-radius: 6px; padding: 4px 10px;
       font-size: 10px; color: var(--text-dim);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
     }
-    .b-body { height: 220px; overflow: hidden; display: block; }
+    .b-url-lock { margin-right: 4px; color: #28CA41; font-size: 9px; }
+    /* featured card gets taller preview */
+    .p-card-featured .b-body { height: 320px; }
+    .b-body { height: 260px; overflow: hidden; display: block; }
     .b-body iframe { width: 100%; height: 100%; border: none; display: block; }
+
     .p-meta {
       display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 18px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--border);
     }
+    .p-meta-left { display: flex; flex-direction: column; gap: 2px; }
     .p-name { font-size: 14px; font-weight: 700; color: var(--text); }
+    .p-url-text { font-size: 11px; color: var(--text-dim); }
     .p-tag {
       font-size: 11px; font-weight: 700; letter-spacing: .5px;
       color: var(--red); background: var(--red-soft);
       border: 1px solid rgba(255,45,45,.2);
       padding: 4px 12px; border-radius: 99px;
+      white-space: nowrap;
     }
 
     /* ── PRICING ── */
@@ -639,7 +675,8 @@
       .hiw-grid { grid-template-columns: 1fr; gap: 2px; }
       .step:first-child { border-radius: 20px 20px 0 0; }
       .step:last-child  { border-radius: 0 0 20px 20px; }
-      .portfolio-grid { grid-template-columns: 1fr; }
+      .portfolio-bento { grid-template-columns: 1fr; }
+      .p-card-featured .b-body { height: 260px; }
       .pricing-layout { grid-template-columns: 1fr; }
       .testi-grid { grid-template-columns: 1fr; }
       .contact-layout { grid-template-columns: 1fr; gap: 48px; }
@@ -795,75 +832,283 @@
 <!-- ── PORTFOLIO ── -->
 <section id="work" class="section-pad" style="background:var(--dark)">
   <div class="section-inner">
-    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px">
+    <div class="reveal" style="display:flex;align-items:flex-end;justify-content:space-between;flex-wrap:wrap;gap:20px;margin-bottom:64px">
       <div>
         <span class="section-tag">Portfolio</span>
         <h2 class="section-title">Recent Projects</h2>
       </div>
       <p style="color:var(--text-muted);font-size:15px;max-width:320px;line-height:1.6">
-        Real websites. Real businesses. Every one delivered in 3 days.
+        Real websites. Real businesses. Every one delivered in 3 days or less.
       </p>
     </div>
-    <div class="portfolio-grid">
 
-      <!-- Peak Roofing -->
+    <div class="portfolio-bento">
+
+      <!-- ① PEAK ROOFING — featured full-width -->
+      <div class="p-card p-card-featured reveal">
+        <div class="p-hover-overlay"><span class="p-overlay-badge">↗ View Project</span></div>
+        <div class="browser-bar-wrap">
+          <div class="b-dots"><div class="b-dot bd-r"></div><div class="b-dot bd-y"></div><div class="b-dot bd-g"></div></div>
+          <div class="b-url"><span class="b-url-lock">🔒</span>peakroofingco.com</div>
+        </div>
+        <div class="b-body">
+          <iframe sandbox="allow-same-origin" title="Peak Roofing" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#0B1A28;color:#fff;overflow:hidden;height:320px'>
+<nav style='background:#0D1F30;border-bottom:3px solid #E07B28;padding:10px 20px;display:flex;align-items:center;justify-content:space-between'>
+  <span style='font-weight:900;font-size:13px;letter-spacing:2px;color:#fff'>PEAK ROOFING CO.</span>
+  <div style='display:flex;gap:16px;font-size:9px;color:#ccc'>
+    <span>Services</span><span>About</span><span>Gallery</span>
+    <span style='background:#E07B28;color:#fff;padding:4px 10px;border-radius:3px;font-weight:bold'>FREE QUOTE</span>
+  </div>
+</nav>
+<div style='position:relative;padding:28px 24px 20px;background:linear-gradient(135deg,#0B1A28 40%,#142436);overflow:hidden'>
+  <div style='position:absolute;top:-30px;right:-30px;width:200px;height:200px;border-radius:50%;background:radial-gradient(circle,rgba(224,123,40,0.2),transparent 70%)'></div>
+  <div style='font-size:9px;color:#E07B28;letter-spacing:3px;font-weight:800;margin-bottom:8px'>⭐ RATED #1 IN MISSOURI • LICENSED &amp; INSURED</div>
+  <div style='font-size:22px;font-weight:900;line-height:1.15;margin-bottom:8px'>Storm Damage?<br/><span style='color:#E07B28'>We Fix It Fast.</span></div>
+  <div style='font-size:9.5px;color:#aaa;margin-bottom:14px;max-width:340px'>20+ years of roofing excellence. Free same-day estimates. We work directly with your insurance company.</div>
+  <div style='display:flex;gap:8px;align-items:center'>
+    <button style='background:#E07B28;color:#fff;border:none;padding:8px 18px;border-radius:5px;font-weight:900;font-size:10px'>GET FREE ESTIMATE →</button>
+    <span style='font-size:10px;color:#E07B28;font-weight:bold'>📞 (314) 555-0192</span>
+  </div>
+</div>
+<div style='display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1px solid #1a2d40'>
+  <div style='padding:10px 14px;background:#0D1F30;border-right:1px solid #1a2d40'>
+    <div style='font-size:16px;margin-bottom:3px'>🏠</div>
+    <div style='font-size:9px;font-weight:800;color:#fff;margin-bottom:2px'>Roof Replacement</div>
+    <div style='font-size:8px;color:#888'>Full tear-off &amp; install</div>
+  </div>
+  <div style='padding:10px 14px;background:#0D1F30;border-right:1px solid #1a2d40'>
+    <div style='font-size:16px;margin-bottom:3px'>⛈️</div>
+    <div style='font-size:9px;font-weight:800;color:#fff;margin-bottom:2px'>Storm Damage</div>
+    <div style='font-size:8px;color:#888'>Insurance claims help</div>
+  </div>
+  <div style='padding:10px 14px;background:#0D1F30;border-right:1px solid #1a2d40'>
+    <div style='font-size:16px;margin-bottom:3px'>🔧</div>
+    <div style='font-size:9px;font-weight:800;color:#fff;margin-bottom:2px'>Repairs &amp; Gutters</div>
+    <div style='font-size:8px;color:#888'>Fast turnaround</div>
+  </div>
+  <div style='padding:10px 14px;background:#0D1F30'>
+    <div style='font-size:16px;margin-bottom:3px'>🏢</div>
+    <div style='font-size:9px;font-weight:800;color:#fff;margin-bottom:2px'>Commercial</div>
+    <div style='font-size:8px;color:#888'>Flat &amp; metal roofing</div>
+  </div>
+</div>
+<div style='background:#E07B28;padding:8px 20px;display:flex;justify-content:space-between;align-items:center'>
+  <span style='font-size:9px;font-weight:900;color:#fff'>✓ 500+ Roofs Replaced</span>
+  <span style='font-size:9px;font-weight:900;color:#fff'>✓ Licensed &amp; Insured</span>
+  <span style='font-size:9px;font-weight:900;color:#fff'>✓ Lifetime Warranty</span>
+</div>
+</body></html>"></iframe>
+        </div>
+        <div class="p-meta">
+          <div class="p-meta-left"><span class="p-name">Peak Roofing Co.</span><span class="p-url-text">peakroofingco.com</span></div>
+          <span class="p-tag">Contractor</span>
+        </div>
+      </div>
+
+      <!-- ② LAKEVIEW EATS -->
       <div class="p-card reveal reveal-delay-1">
+        <div class="p-hover-overlay"><span class="p-overlay-badge">↗ View Project</span></div>
         <div class="browser-bar-wrap">
           <div class="b-dots"><div class="b-dot bd-r"></div><div class="b-dot bd-y"></div><div class="b-dot bd-g"></div></div>
-          <div class="b-url">peakroofingco.com</div>
+          <div class="b-url"><span class="b-url-lock">🔒</span>lakevieweats.com</div>
         </div>
         <div class="b-body">
-          <iframe sandbox="allow-same-origin" title="Peak Roofing" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#0D1B2A;color:#fff;height:220px;overflow:hidden'><div style='background:#E07B28;padding:7px 14px;display:flex;align-items:center;justify-content:space-between'><span style='font-weight:900;font-size:12px;letter-spacing:1px'>PEAK ROOFING CO.</span><span style='font-size:10px;font-weight:bold'>📞 (314) 555-0192</span></div><div style='padding:18px 14px;text-align:center;background:linear-gradient(135deg,#0D1B2A 60%,#1a2d42)'><div style='font-size:9px;color:#E07B28;letter-spacing:2px;font-weight:bold;margin-bottom:6px'>LICENSED &amp; INSURED — MISSOURI</div><div style='font-size:17px;font-weight:900;line-height:1.2;margin-bottom:7px'>Roofing You Can<br/>Trust Since 2008</div><div style='font-size:9px;color:#aaa;margin-bottom:12px'>Free estimates • Storm damage specialists</div><button style='background:#E07B28;color:#fff;border:none;padding:7px 18px;border-radius:5px;font-weight:bold;font-size:10px'>GET FREE ESTIMATE</button></div><div style='padding:10px 14px;background:#111e2d'><div style='font-size:10px;color:#E07B28;font-weight:bold;margin-bottom:7px;text-align:center'>OUR SERVICES</div><div style='display:grid;grid-template-columns:1fr 1fr;gap:5px'><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Roof Replacement</div><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Storm Damage</div><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Gutters &amp; Flashing</div><div style='background:#0D1B2A;padding:6px 9px;border-radius:4px;border-left:3px solid #E07B28;font-size:9px'>Commercial Roofing</div></div></div><div style='background:#E07B28;padding:8px;text-align:center'><div style='font-size:11px;font-weight:900'>📞 CALL NOW: (314) 555-0192</div></div></body></html>"></iframe>
+          <iframe sandbox="allow-same-origin" title="Lakeview Eats" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Georgia,serif;background:#1A0A05;color:#fff;height:260px;overflow:hidden'>
+<nav style='background:rgba(0,0,0,.5);backdrop-filter:blur(8px);padding:8px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(245,200,106,.2)'>
+  <span style='color:#F5C86A;font-weight:bold;font-size:12px;letter-spacing:2px'>LAKEVIEW EATS</span>
+  <div style='display:flex;gap:12px;font-size:8px;color:#ccc'><span>Menu</span><span>Hours</span><span>Reserve</span></div>
+</nav>
+<div style='position:relative;padding:20px 16px 16px;background:linear-gradient(160deg,#3D0C00,#8B1A1A 50%,#1A0A05);overflow:hidden'>
+  <div style='position:absolute;inset:0;background:repeating-linear-gradient(45deg,transparent,transparent 8px,rgba(245,200,106,.04) 8px,rgba(245,200,106,.04) 9px)'></div>
+  <div style='position:relative'>
+    <div style='font-size:7.5px;color:#F5C86A;letter-spacing:3px;font-weight:bold;margin-bottom:6px'>FARM TO TABLE • EST. 2012</div>
+    <div style='font-size:19px;font-weight:900;line-height:1.15;margin-bottom:6px;font-family:Georgia'>Where Every Meal<br/>Tells a Story</div>
+    <div style='font-size:8.5px;color:rgba(255,255,255,.6);margin-bottom:10px'>Locally sourced. Chef-crafted. Open daily 11am–10pm.</div>
+    <div style='display:flex;gap:8px'>
+      <button style='background:#F5C86A;color:#1A0A05;border:none;padding:6px 14px;border-radius:3px;font-weight:bold;font-size:8.5px'>RESERVE A TABLE</button>
+      <button style='background:transparent;color:#F5C86A;border:1px solid #F5C86A;padding:6px 14px;border-radius:3px;font-weight:bold;font-size:8.5px'>VIEW MENU</button>
+    </div>
+  </div>
+</div>
+<div style='padding:8px 16px;background:#0F0503'>
+  <div style='font-size:8px;color:#F5C86A;font-weight:bold;letter-spacing:1px;margin-bottom:6px'>TONIGHT&apos;S MENU</div>
+  <div style='display:flex;flex-direction:column;gap:4px'>
+    <div style='display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid #F5C86A'>
+      <div><div style='font-size:8.5px;font-weight:bold'>Pan-Seared Salmon</div><div style='font-size:7.5px;color:#888'>lemon butter · roasted veg</div></div>
+      <span style='color:#F5C86A;font-weight:bold;font-size:9px'>$28</span>
+    </div>
+    <div style='display:flex;justify-content:space-between;align-items:center;padding:5px 8px;background:rgba(255,255,255,.04);border-radius:4px;border-left:2px solid rgba(245,200,106,.3)'>
+      <div><div style='font-size:8.5px;font-weight:bold'>12oz Ribeye</div><div style='font-size:7.5px;color:#888'>truffle butter · fries</div></div>
+      <span style='color:#F5C86A;font-weight:bold;font-size:9px'>$42</span>
+    </div>
+  </div>
+</div>
+</body></html>"></iframe>
         </div>
-        <div class="p-meta"><span class="p-name">Peak Roofing Co.</span><span class="p-tag">Contractor</span></div>
+        <div class="p-meta">
+          <div class="p-meta-left"><span class="p-name">Lakeview Eats</span><span class="p-url-text">lakevieweats.com</span></div>
+          <span class="p-tag">Restaurant</span>
+        </div>
       </div>
 
-      <!-- Lakeview Eats -->
+      <!-- ③ TITAN FITNESS -->
       <div class="p-card reveal reveal-delay-2">
+        <div class="p-hover-overlay"><span class="p-overlay-badge">↗ View Project</span></div>
         <div class="browser-bar-wrap">
           <div class="b-dots"><div class="b-dot bd-r"></div><div class="b-dot bd-y"></div><div class="b-dot bd-g"></div></div>
-          <div class="b-url">lakevieweats.com</div>
+          <div class="b-url"><span class="b-url-lock">🔒</span>titanfitnessstl.com</div>
         </div>
         <div class="b-body">
-          <iframe sandbox="allow-same-origin" title="Lakeview Eats" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Georgia,serif;background:#F5ECD7;color:#2C1810;height:220px;overflow:hidden'><div style='background:#8B1A1A;padding:7px 14px;display:flex;align-items:center;justify-content:space-between'><span style='color:#F5ECD7;font-weight:bold;font-size:12px;letter-spacing:1px'>LAKEVIEW EATS</span><span style='color:#F5ECD7;font-size:9px'>Mon–Sun 11am–10pm</span></div><div style='background:linear-gradient(160deg,#8B1A1A,#C0392B);padding:20px 14px;text-align:center;position:relative;overflow:hidden'><div style='position:absolute;inset:0;opacity:0.1;background:repeating-linear-gradient(45deg,transparent,transparent 5px,rgba(255,210,120,.6) 5px,rgba(255,210,120,.6) 6px)'></div><div style='position:relative'><div style='font-size:9px;color:#F5C86A;letter-spacing:2px;font-weight:bold;margin-bottom:6px'>FRESH • LOCAL • DELICIOUS</div><div style='font-size:18px;font-weight:900;color:#fff;line-height:1.2;margin-bottom:6px'>Farm to Table<br/>at the Lake</div><div style='font-size:9px;color:#eee;margin-bottom:10px'>Serving the community since 2012</div><button style='background:#F5C86A;color:#2C1810;border:none;padding:6px 14px;border-radius:4px;font-weight:bold;font-size:9px'>VIEW MENU</button></div></div><div style='padding:10px 14px'><div style='font-size:10px;color:#8B1A1A;font-weight:bold;text-align:center;margin-bottom:6px'>TODAY&#39;S SPECIALS</div><div style='display:flex;flex-direction:column;gap:4px'><div style='display:flex;justify-content:space-between;padding:5px 8px;background:#fff;border-radius:4px;font-size:9px'><span>Pan-Seared Salmon</span><span style='color:#8B1A1A;font-weight:bold'>$24</span></div><div style='display:flex;justify-content:space-between;padding:5px 8px;background:#fff;border-radius:4px;font-size:9px'><span>Ribeye Steak</span><span style='color:#8B1A1A;font-weight:bold'>$38</span></div><div style='display:flex;justify-content:space-between;padding:5px 8px;background:#fff;border-radius:4px;font-size:9px'><span>Pasta Primavera</span><span style='color:#8B1A1A;font-weight:bold'>$18</span></div></div></div></body></html>"></iframe>
+          <iframe sandbox="allow-same-origin" title="Titan Fitness" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#080808;color:#fff;height:260px;overflow:hidden'>
+<nav style='background:#0F0F0F;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #F5E000'>
+  <span style='color:#F5E000;font-weight:900;font-size:12px;letter-spacing:3px'>TITAN FITNESS</span>
+  <div style='display:flex;gap:12px;font-size:8px;color:#999'><span>Classes</span><span>Pricing</span><span>Trainers</span>
+    <span style='background:#F5E000;color:#000;padding:3px 9px;border-radius:2px;font-weight:900;font-size:8px'>JOIN NOW</span>
+  </div>
+</nav>
+<div style='padding:18px 16px 14px;background:linear-gradient(160deg,#111,#080808);position:relative;overflow:hidden'>
+  <div style='position:absolute;top:-40px;right:-40px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(245,224,0,0.12),transparent 70%)'></div>
+  <div style='font-size:7.5px;color:#F5E000;letter-spacing:3px;font-weight:900;margin-bottom:6px'>STL&apos;S #1 GYM — 24/7 ACCESS</div>
+  <div style='font-size:22px;font-weight:900;line-height:1;margin-bottom:3px'>STOP WAITING.</div>
+  <div style='font-size:22px;font-weight:900;line-height:1;color:#F5E000;margin-bottom:8px'>START WINNING.</div>
+  <div style='font-size:8.5px;color:#666;margin-bottom:12px'>50+ classes/week. Elite trainers. Real results guaranteed.</div>
+  <button style='background:#F5E000;color:#000;border:none;padding:8px 18px;border-radius:3px;font-weight:900;font-size:9.5px'>START FREE 7-DAY TRIAL →</button>
+</div>
+<div style='padding:8px 16px;background:#0D0D0D'>
+  <div style='font-size:8px;color:#F5E000;font-weight:900;letter-spacing:1px;margin-bottom:5px'>TODAY&apos;S CLASSES</div>
+  <div style='display:flex;flex-direction:column;gap:3px'>
+    <div style='display:flex;justify-content:space-between;padding:4px 8px;background:#111;border-left:2px solid #F5E000;font-size:8px'><span style='color:#F5E000;font-weight:bold'>6:00 AM</span><span>CrossFit Power Hour</span><span style='color:#555'>Coach: Dan</span></div>
+    <div style='display:flex;justify-content:space-between;padding:4px 8px;background:#111;border-left:2px solid #444;font-size:8px'><span style='color:#aaa;font-weight:bold'>12:00 PM</span><span>HIIT Bootcamp</span><span style='color:#555'>Coach: Maria</span></div>
+    <div style='display:flex;justify-content:space-between;padding:4px 8px;background:#111;border-left:2px solid #444;font-size:8px'><span style='color:#aaa;font-weight:bold'>5:30 PM</span><span>Strength &amp; Conditioning</span><span style='color:#555'>Coach: Tyler</span></div>
+  </div>
+</div>
+</body></html>"></iframe>
         </div>
-        <div class="p-meta"><span class="p-name">Lakeview Eats</span><span class="p-tag">Restaurant</span></div>
+        <div class="p-meta">
+          <div class="p-meta-left"><span class="p-name">Titan Fitness STL</span><span class="p-url-text">titanfitnessstl.com</span></div>
+          <span class="p-tag">Gym</span>
+        </div>
       </div>
 
-      <!-- Clarity Med Spa -->
+      <!-- ④ CLARITY MED SPA -->
       <div class="p-card reveal reveal-delay-1">
+        <div class="p-hover-overlay"><span class="p-overlay-badge">↗ View Project</span></div>
         <div class="browser-bar-wrap">
           <div class="b-dots"><div class="b-dot bd-r"></div><div class="b-dot bd-y"></div><div class="b-dot bd-g"></div></div>
-          <div class="b-url">claritymedspa.com</div>
+          <div class="b-url"><span class="b-url-lock">🔒</span>claritymedspa.com</div>
         </div>
         <div class="b-body">
-          <iframe sandbox="allow-same-origin" title="Clarity Med Spa" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#FAFAF8;color:#333;height:220px;overflow:hidden'><div style='background:#fff;padding:8px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E8EDE8'><span style='color:#5A7A5A;font-size:11px;font-weight:900;letter-spacing:3px'>CLARITY</span><span style='font-size:9px;color:#999'>MED SPA &amp; WELLNESS</span></div><div style='background:linear-gradient(160deg,#E8F0E8,#F5F9F5);padding:20px 14px;text-align:center'><div style='font-size:8px;color:#5A7A5A;letter-spacing:3px;font-weight:bold;margin-bottom:7px'>LUXURY WELLNESS</div><div style='font-size:17px;font-weight:900;color:#2A3A2A;line-height:1.3;margin-bottom:6px'>Feel Like<br/>Yourself Again</div><div style='font-size:9px;color:#888;margin-bottom:12px'>Medical-grade skincare treatments</div><button style='background:#5A7A5A;color:#fff;border:none;padding:7px 18px;border-radius:20px;font-weight:bold;font-size:9px'>Book Consultation</button></div><div style='padding:10px 14px'><div style='font-size:9px;color:#5A7A5A;font-weight:bold;margin-bottom:6px;text-align:center'>OUR SERVICES</div><div style='display:grid;grid-template-columns:1fr 1fr;gap:5px'><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center'>Botox &amp; Fillers</div><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center'>Laser Skin</div><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center'>Chemical Peels</div><div style='background:#E8F0E8;padding:6px 8px;border-radius:8px;font-size:8.5px;text-align:center'>Microneedling</div></div></div><div style='margin:8px 14px;background:#5A7A5A;padding:8px;border-radius:8px;text-align:center'><div style='font-size:9px;color:#fff;font-weight:bold'>New Client Special: 20% Off First Visit</div></div></body></html>"></iframe>
+          <iframe sandbox="allow-same-origin" title="Clarity Med Spa" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#F7F6F3;color:#2A2A2A;height:260px;overflow:hidden'>
+<nav style='background:#fff;padding:9px 16px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #E5EBE5'>
+  <div>
+    <span style='color:#4A6741;font-size:12px;font-weight:900;letter-spacing:4px'>CLARITY</span>
+    <span style='color:#aaa;font-size:8px;margin-left:6px'>MED SPA &amp; WELLNESS</span>
+  </div>
+  <button style='background:#4A6741;color:#fff;border:none;padding:5px 12px;border-radius:20px;font-size:8px;font-weight:bold'>Book Now</button>
+</nav>
+<div style='background:linear-gradient(135deg,#E8EEE0,#F2F7EE);padding:20px 16px;position:relative;overflow:hidden'>
+  <div style='position:absolute;right:-20px;top:-20px;width:120px;height:120px;border-radius:50%;background:rgba(74,103,65,0.1)'></div>
+  <div style='font-size:7.5px;color:#4A6741;letter-spacing:3px;font-weight:bold;margin-bottom:6px'>LUXURY MEDICAL AESTHETICS</div>
+  <div style='font-size:19px;font-weight:900;color:#1A2818;line-height:1.2;margin-bottom:6px'>Rediscover<br/>Your Radiance.</div>
+  <div style='font-size:8.5px;color:#666;margin-bottom:10px'>Board-certified providers. Natural results. Complimentary consultations.</div>
+  <div style='display:flex;gap:8px'>
+    <button style='background:#4A6741;color:#fff;border:none;padding:6px 14px;border-radius:20px;font-weight:bold;font-size:8.5px'>Book Consult</button>
+    <span style='display:flex;align-items:center;font-size:8px;color:#4A6741;font-weight:bold;gap:4px'>★★★★★ 200+ Reviews</span>
+  </div>
+</div>
+<div style='padding:8px 16px;background:#fff'>
+  <div style='font-size:8px;color:#4A6741;font-weight:bold;letter-spacing:1px;margin-bottom:6px'>POPULAR TREATMENTS</div>
+  <div style='display:grid;grid-template-columns:1fr 1fr;gap:5px'>
+    <div style='background:#F2F7EE;padding:6px 8px;border-radius:8px;border:1px solid #D8E4D0'>
+      <div style='font-size:8.5px;font-weight:bold;color:#1A2818'>Botox &amp; Dysport</div>
+      <div style='font-size:7.5px;color:#666;margin-top:1px'>From $12/unit</div>
+    </div>
+    <div style='background:#F2F7EE;padding:6px 8px;border-radius:8px;border:1px solid #D8E4D0'>
+      <div style='font-size:8.5px;font-weight:bold;color:#1A2818'>Lip Filler</div>
+      <div style='font-size:7.5px;color:#666;margin-top:1px'>From $650</div>
+    </div>
+    <div style='background:#F2F7EE;padding:6px 8px;border-radius:8px;border:1px solid #D8E4D0'>
+      <div style='font-size:8.5px;font-weight:bold;color:#1A2818'>Laser Resurfacing</div>
+      <div style='font-size:7.5px;color:#666;margin-top:1px'>From $299</div>
+    </div>
+    <div style='background:#4A6741;padding:6px 8px;border-radius:8px;text-align:center'>
+      <div style='font-size:8.5px;font-weight:bold;color:#fff'>New Client 20% Off</div>
+    </div>
+  </div>
+</div>
+</body></html>"></iframe>
         </div>
-        <div class="p-meta"><span class="p-name">Clarity Med Spa</span><span class="p-tag">Med Spa</span></div>
+        <div class="p-meta">
+          <div class="p-meta-left"><span class="p-name">Clarity Med Spa</span><span class="p-url-text">claritymedspa.com</span></div>
+          <span class="p-tag">Med Spa</span>
+        </div>
       </div>
 
-      <!-- Titan Fitness -->
-      <div class="p-card reveal reveal-delay-2">
+      <!-- ⑤ SUMMIT REAL ESTATE — featured full-width -->
+      <div class="p-card p-card-featured reveal reveal-delay-1">
+        <div class="p-hover-overlay"><span class="p-overlay-badge">↗ View Project</span></div>
         <div class="browser-bar-wrap">
           <div class="b-dots"><div class="b-dot bd-r"></div><div class="b-dot bd-y"></div><div class="b-dot bd-g"></div></div>
-          <div class="b-url">titanfitnessstl.com</div>
+          <div class="b-url"><span class="b-url-lock">🔒</span>summitrealestategroup.com</div>
         </div>
         <div class="b-body">
-          <iframe sandbox="allow-same-origin" title="Titan Fitness" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#0A0A0A;color:#fff;height:220px;overflow:hidden'><div style='background:#F5E000;padding:7px 14px;display:flex;align-items:center;justify-content:space-between'><span style='color:#0A0A0A;font-weight:900;font-size:12px;letter-spacing:2px'>TITAN FITNESS STL</span><span style='font-size:9px;color:#0A0A0A;font-weight:bold'>24/7 ACCESS</span></div><div style='padding:18px 14px;text-align:center;background:linear-gradient(160deg,#1A1A1A,#0A0A0A)'><div style='font-size:8px;color:#F5E000;letter-spacing:3px;font-weight:bold;margin-bottom:6px'>BUILD YOUR BEST SELF</div><div style='font-size:20px;font-weight:900;line-height:1.1;margin-bottom:4px'>NO EXCUSES.</div><div style='font-size:20px;font-weight:900;line-height:1.1;color:#F5E000;margin-bottom:10px'>JUST RESULTS.</div><button style='background:#F5E000;color:#0A0A0A;border:none;padding:7px 18px;border-radius:4px;font-weight:900;font-size:10px'>START FREE TRIAL</button></div><div style='padding:8px 14px;background:#111'><div style='font-size:9px;color:#F5E000;font-weight:bold;margin-bottom:6px;text-align:center'>CLASS SCHEDULE</div><div style='display:flex;flex-direction:column;gap:4px'><div style='display:flex;justify-content:space-between;padding:4px 8px;background:#1A1A1A;border-left:2px solid #F5E000;font-size:8.5px'><span style='color:#F5E000'>6:00 AM</span><span>CrossFit Power</span></div><div style='display:flex;justify-content:space-between;padding:4px 8px;background:#1A1A1A;border-left:2px solid #F5E000;font-size:8.5px'><span style='color:#F5E000'>12:00 PM</span><span>HIIT Bootcamp</span></div><div style='display:flex;justify-content:space-between;padding:4px 8px;background:#1A1A1A;border-left:2px solid #F5E000;font-size:8.5px'><span style='color:#F5E000'>5:30 PM</span><span>Strength &amp; Conditioning</span></div></div></div></body></html>"></iframe>
-        </div>
-        <div class="p-meta"><span class="p-name">Titan Fitness STL</span><span class="p-tag">Gym</span></div>
+          <iframe sandbox="allow-same-origin" title="Summit Real Estate" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#141414;color:#fff;height:320px;overflow:hidden'>
+<nav style='background:#1C1C1C;padding:9px 20px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(201,168,76,.3)'>
+  <div style='display:flex;align-items:center;gap:8px'>
+    <div style='width:20px;height:20px;background:#C9A84C;border-radius:3px;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:900;color:#111'>S</div>
+    <span style='color:#C9A84C;font-weight:900;font-size:11px;letter-spacing:2px'>SUMMIT REAL ESTATE</span>
+  </div>
+  <div style='display:flex;gap:16px;font-size:9px;color:#888'><span>Buy</span><span>Sell</span><span>Agents</span>
+    <span style='background:#C9A84C;color:#111;padding:4px 10px;border-radius:3px;font-weight:bold'>Contact Us</span>
+  </div>
+</nav>
+<div style='display:grid;grid-template-columns:1.2fr 1fr;gap:0;height:calc(100% - 40px)'>
+  <div style='padding:20px 20px;background:linear-gradient(135deg,#1A1A1A,#141414);display:flex;flex-direction:column;justify-content:center'>
+    <div style='font-size:8px;color:#C9A84C;letter-spacing:2px;font-weight:bold;margin-bottom:8px'>ST. LOUIS LUXURY PROPERTIES</div>
+    <div style='font-size:20px;font-weight:900;line-height:1.15;margin-bottom:8px'>Find Your<br/>Perfect Home<br/><span style='color:#C9A84C'>in St. Louis.</span></div>
+    <div style='font-size:8.5px;color:#888;margin-bottom:14px;line-height:1.5'>Top-rated agents. Exclusive listings. 12+ years of local expertise.</div>
+    <div style='display:flex;gap:8px'>
+      <button style='background:#C9A84C;color:#111;border:none;padding:7px 14px;border-radius:4px;font-weight:900;font-size:9px'>VIEW LISTINGS →</button>
+      <button style='background:transparent;color:#C9A84C;border:1px solid rgba(201,168,76,.4);padding:7px 14px;border-radius:4px;font-weight:700;font-size:9px'>SELL MY HOME</button>
+    </div>
+    <div style='display:flex;gap:16px;margin-top:14px'>
+      <div><div style='font-size:14px;font-weight:900;color:#C9A84C'>$2.4B+</div><div style='font-size:7.5px;color:#666'>Sold in 2024</div></div>
+      <div><div style='font-size:14px;font-weight:900;color:#C9A84C'>480+</div><div style='font-size:7.5px;color:#666'>Happy Clients</div></div>
+      <div><div style='font-size:14px;font-weight:900;color:#C9A84C'>4.9★</div><div style='font-size:7.5px;color:#666'>Avg. Rating</div></div>
+    </div>
+  </div>
+  <div style='background:#111;padding:14px 16px;display:flex;flex-direction:column;gap:8px'>
+    <div style='font-size:8.5px;color:#C9A84C;font-weight:bold;letter-spacing:1px;margin-bottom:2px'>FEATURED LISTINGS</div>
+    <div style='background:#1A1A1A;border-radius:6px;overflow:hidden;border:1px solid rgba(201,168,76,.15)'>
+      <div style='background:linear-gradient(135deg,#2C2218,#1A1A1A);height:36px;display:flex;align-items:center;justify-content:center'>
+        <div style='font-size:8px;color:#C9A84C;opacity:.5'>🏡 Photo</div>
       </div>
-
-      <!-- Summit Real Estate -->
-      <div class="p-card reveal reveal-delay-1" style="grid-column: 1 / -1; max-width: 560px; margin: 0 auto; width: 100%;">
-        <div class="browser-bar-wrap">
-          <div class="b-dots"><div class="b-dot bd-r"></div><div class="b-dot bd-y"></div><div class="b-dot bd-g"></div></div>
-          <div class="b-url">summitrealestategroup.com</div>
+      <div style='padding:7px 10px;display:flex;justify-content:space-between;align-items:center'>
+        <div><div style='font-size:8.5px;font-weight:bold'>Clayton Estate</div><div style='font-size:7.5px;color:#666'>4bd · 3ba · 2,800 sqft</div></div>
+        <div style='color:#C9A84C;font-weight:900;font-size:9.5px'>$725K</div>
+      </div>
+    </div>
+    <div style='background:#1A1A1A;border-radius:6px;overflow:hidden;border:1px solid rgba(201,168,76,.15)'>
+      <div style='background:linear-gradient(135deg,#182024,#1A1A1A);height:36px;display:flex;align-items:center;justify-content:center'>
+        <div style='font-size:8px;color:#C9A84C;opacity:.5'>🏡 Photo</div>
+      </div>
+      <div style='padding:7px 10px;display:flex;justify-content:space-between;align-items:center'>
+        <div><div style='font-size:8.5px;font-weight:bold'>Webster Groves</div><div style='font-size:7.5px;color:#666'>3bd · 2ba · 1,950 sqft</div></div>
+        <div style='color:#C9A84C;font-weight:900;font-size:9.5px'>$489K</div>
+      </div>
+    </div>
+    <div style='background:#1A1A1A;border-radius:6px;padding:8px 10px;display:flex;align-items:center;gap:8px;border:1px solid rgba(201,168,76,.15)'>
+      <div style='width:30px;height:30px;border-radius:50%;background:#C9A84C;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:900;color:#111;flex-shrink:0'>JR</div>
+      <div><div style='font-size:8.5px;font-weight:bold'>James Rivera</div><div style='font-size:7.5px;color:#888'>Lead Agent · ★★★★★ · 200+ sales</div></div>
+    </div>
+  </div>
+</div>
+</body></html>"></iframe>
         </div>
-        <div class="b-body">
-          <iframe sandbox="allow-same-origin" title="Summit Real Estate" srcdoc="<!DOCTYPE html><html><body style='margin:0;font-family:Arial,sans-serif;background:#1C1C1E;color:#fff;height:220px;overflow:hidden'><div style='background:#2C2C2E;padding:7px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #C9A84C'><span style='color:#C9A84C;font-weight:900;font-size:11px;letter-spacing:2px'>SUMMIT REAL ESTATE</span><span style='font-size:9px;color:#aaa'>GROUP</span></div><div style='padding:16px 14px;background:linear-gradient(160deg,#2C2C2E,#1C1C1E)'><div style='font-size:8px;color:#C9A84C;letter-spacing:2px;font-weight:bold;margin-bottom:6px'>LUXURY PROPERTIES</div><div style='font-size:15px;font-weight:900;line-height:1.3;margin-bottom:5px'>Find Your Dream Home</div><div style='font-size:8.5px;color:#aaa;margin-bottom:10px'>Top-rated agents in the St. Louis metro area</div><button style='background:#C9A84C;color:#1C1C1E;border:none;padding:6px 14px;border-radius:4px;font-weight:bold;font-size:9px'>View Listings</button></div><div style='padding:8px 14px'><div style='font-size:8.5px;color:#C9A84C;font-weight:bold;margin-bottom:6px'>FEATURED LISTINGS</div><div style='display:flex;flex-direction:column;gap:5px'><div style='background:#2C2C2E;padding:6px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center'><div style='font-size:8.5px'>4bd / 3ba • Clayton</div><div style='color:#C9A84C;font-weight:bold;font-size:9px'>$725,000</div></div><div style='background:#2C2C2E;padding:6px 10px;border-radius:5px;display:flex;justify-content:space-between;align-items:center'><div style='font-size:8.5px'>3bd / 2ba • Webster Groves</div><div style='color:#C9A84C;font-weight:bold;font-size:9px'>$489,000</div></div></div></div></body></html>"></iframe>
+        <div class="p-meta">
+          <div class="p-meta-left"><span class="p-name">Summit Real Estate Group</span><span class="p-url-text">summitrealestategroup.com</span></div>
+          <span class="p-tag">Real Estate</span>
         </div>
-        <div class="p-meta"><span class="p-name">Summit Real Estate Group</span><span class="p-tag">Real Estate</span></div>
       </div>
 
     </div>
