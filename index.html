@@ -1309,28 +1309,28 @@
       <div class="reveal reveal-delay-2">
         <div class="form-card">
           <div id="form-wrap">
-            <form onsubmit="submitForm(event)">
+            <form action="https://formspree.io/f/xnjydkkq" method="POST" onsubmit="submitForm(event)">
               <div class="form-row">
                 <div class="form-group">
                   <label class="form-label">Full Name</label>
-                  <input class="form-input" type="text" placeholder="John Smith" required />
+                  <input class="form-input" type="text" name="name" placeholder="John Smith" required />
                 </div>
                 <div class="form-group">
                   <label class="form-label">Phone Number</label>
-                  <input class="form-input" type="tel" placeholder="(314) 555-0100" required />
+                  <input class="form-input" type="tel" name="phone" placeholder="(314) 555-0100" required />
                 </div>
               </div>
               <div class="form-group">
                 <label class="form-label">Email Address</label>
-                <input class="form-input" type="email" placeholder="john@example.com" required />
+                <input class="form-input" type="email" name="email" placeholder="john@example.com" required />
               </div>
               <div class="form-group">
                 <label class="form-label">Business Type</label>
-                <input class="form-input" type="text" placeholder="What kind of business do you run?" required />
+                <input class="form-input" type="text" name="business_type" placeholder="What kind of business do you run?" required />
               </div>
               <div class="form-group">
                 <label class="form-label">Best Time to Call</label>
-                <select class="form-select" required>
+                <select class="form-select" name="best_time_to_call" required>
                   <option value="" disabled selected>Select a time...</option>
                   <option>Morning 8am–12pm</option>
                   <option>Afternoon 12pm–5pm</option>
