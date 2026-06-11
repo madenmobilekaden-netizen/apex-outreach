@@ -1406,10 +1406,25 @@
   }
 
   // Form submit
-  function submitForm(e) {
+  async function submitForm(e) {
     e.preventDefault();
-    document.getElementById('form-wrap').style.display = 'none';
-    document.getElementById('success-box').classList.add('show');
+    const form = e.target;
+    const data = new FormData(form);
+    try {
+      const res = await fetch(form.action, {
+        method: 'POST',
+        body: data,
+        headers: { 'Accept': 'application/json' }
+      });
+      if (res.ok) {
+        document.getElementById('form-wrap').style.display = 'none';
+        document.getElementById('success-box').classList.add('show');
+      } else {
+        alert('Something went wrong. Please try again or call us directly.');
+      }
+    } catch {
+      alert('Something went wrong. Please try again or call us directly.');
+    }
   }
 </script>
 </body>
